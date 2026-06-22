@@ -4,7 +4,8 @@ from src.data_loader import load_csv
 from src.data_summary import (
     get_dataset_overview,
     get_column_data_types,
-    get_descriptive_statistics
+    get_descriptive_statistics,
+    get_correlation_summary
 )
 from src.data_quality import get_missing_values
 from src.visualization import (
@@ -12,7 +13,8 @@ from src.visualization import (
     get_categorical_columns,
     create_histogram,
     create_bar_chart,
-    create_scatter_plot
+    create_scatter_plot,
+    create_correlation_heatmap
 )
 from src.prompt_template import build_insight_prompt, build_chat_prompt
 from src.llm_service import generate_ai_insight
@@ -95,6 +97,19 @@ if uploaded_file is not None:
         else:
             st.info("No numeric columns available for descriptive statistics.")
 
+        # Correlation summary
+        st.subheader("Top Correlations")
+
+        correlation_summary = get_correlation_summary(df)
+
+        if correlation_summary is not None:
+            st.dataframe(
+                correlation_summary,
+                use_container_width=True
+            )
+        else:
+            st.info("At least two numeric columns are required for correlation summary.")
+
         # Data visualization
         st.subheader("Data Visualization")
 
@@ -106,7 +121,8 @@ if uploaded_file is not None:
             [
                 "Numeric Distribution",
                 "Categorical Count",
-                "Scatter Plot"
+                "Scatter Plot",
+                "Correlation Heatmap"
             ]
         )
 
@@ -151,6 +167,14 @@ if uploaded_file is not None:
                 st.plotly_chart(fig, use_container_width=True)
             else:
                 st.info("At least two numeric columns are required for a scatter plot.")
+        
+        elif chart_type == "Correlation Heatmap":
+            fig = create_correlation_heatmap(df)
+
+            if fig is not None:
+                st.plotly_chart(fig, use_container_width=True)
+            else:
+                st.info("At least two numeric columns are required for correlation analysis.")
 
         # Dataset context for LLM
         dataset_context = {
@@ -164,6 +188,11 @@ if uploaded_file is not None:
                 descriptive_statistics.to_dict()
                 if descriptive_statistics is not None
                 else "No numeric columns available"
+            ),
+            "top_correlations": (
+                correlation_summary.to_dict(orient="records")
+                if correlation_summary is not None
+                else "No correlation summary available"
             )
         }
 

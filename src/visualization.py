@@ -59,3 +59,23 @@ def create_scatter_plot(df, x_column, y_column):
     )
 
     return fig
+
+def create_correlation_heatmap(df):
+    """
+    Create a correlation heatmap for numeric columns.
+    """
+    numeric_df = df.select_dtypes(include=["number"])
+
+    if numeric_df.shape[1] < 2:
+        return None
+
+    correlation_matrix = numeric_df.corr()
+
+    fig = px.imshow(
+        correlation_matrix,
+        text_auto=True,
+        title="Correlation Heatmap",
+        aspect="auto"
+    )
+
+    return fig

@@ -78,6 +78,10 @@ Example questions:
 * What should I analyze next?
 * What are the main data quality issues in this dataset?
 
+### CSV Delimiter Detection
+
+The application supports CSV files with different delimiters, including comma-separated and semicolon-separated datasets.
+
 ## Tech Stack
 
 * Python
