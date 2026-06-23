@@ -6,7 +6,7 @@ LLM-Powered Data Analysis Assistant is an AI-powered data analysis application t
 
 This project is designed to help users understand datasets faster without manually writing extensive analysis code. It combines data analysis workflow, interactive visualization, and LLM-based insight generation in one Streamlit application.
 
-## Objectives
+## Objectives  
 
 The objectives of this project are:
 
