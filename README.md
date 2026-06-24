@@ -21,7 +21,7 @@ The objectives of this project are:
 
 ### 1. CSV Upload
 
-Users can upload a CSV file directly through the web application.
+Users can upload a CSV file directly through the web application.  
 
 ### 2. Dataset Preview
 
